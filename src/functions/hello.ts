@@ -1,4 +1,4 @@
-import { httpAdapt } from '../infra/adapters/http';
+import { httpAdapt } from '@/infra/adapters/http';
 
 type Data = {
   name: string;

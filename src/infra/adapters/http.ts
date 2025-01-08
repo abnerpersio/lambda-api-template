@@ -1,9 +1,9 @@
+import { errorHandler } from '@/infra/middlewares/error-handler';
+import { DefaultBody, HttpRequest, HttpResponse } from '@/types/http';
 import middy from '@middy/core';
 import httpJsonBodyParser from '@middy/http-json-body-parser';
 import httpMultipartBodyParser from '@middy/http-multipart-body-parser';
 import httpResponseSerializer from '@middy/http-response-serializer';
-import { DefaultBody, HttpRequest, HttpResponse } from '../../types/http';
-import { errorHandler } from '../middlewares/error-handler';
 
 type Handler<TBody extends DefaultBody> = (event: HttpRequest<TBody>) => Promise<HttpResponse>;
 

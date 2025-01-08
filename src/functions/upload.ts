@@ -1,5 +1,5 @@
-import { httpAdapt } from '../infra/adapters/http';
-import { RequestFile } from '../types/file';
+import { httpAdapt } from '@/infra/adapters/http';
+import { RequestFile } from '@/types/file';
 
 type Data = {
   file: RequestFile;
