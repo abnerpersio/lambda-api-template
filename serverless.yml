@@ -17,20 +17,14 @@ esbuild:
     - '@aws-sdk/*'
 
 functions:
-  hello:
-    handler: src/functions/hello.handler
-    events:
-      - httpApi:
-          path: /
-          method: GET
   upload:
-    handler: src/functions/upload.handler
+    handler: src/infra/functions/upload/index.handler
     events:
       - httpApi:
           path: /
           method: POST
   users:
-    handler: src/functions/users/index.handler
+    handler: src/infra/functions/users/index.handler
     events:
       - httpApi:
           path: /users
