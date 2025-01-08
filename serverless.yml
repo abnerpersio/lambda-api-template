@@ -18,8 +18,23 @@ esbuild:
 
 functions:
   hello:
-    handler: handler.hello
+    handler: src/functions/hello.handler
     events:
       - httpApi:
           path: /
-          method: get
+          method: GET
+  upload:
+    handler: src/functions/upload.handler
+    events:
+      - httpApi:
+          path: /
+          method: POST
+  users:
+    handler: src/functions/users/index.handler
+    events:
+      - httpApi:
+          path: /users
+          method: ANY
+      - httpApi:
+          path: /users/{userId+}
+          method: ANY

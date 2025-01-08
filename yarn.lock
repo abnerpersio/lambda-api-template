@@ -121,6 +121,13 @@
   dependencies:
     "@middy/util" "6.0.0"
 
+"@middy/http-router@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@middy/http-router/-/http-router-6.0.0.tgz#d263bc86ca6e6231ab5b76a85ceb0786d682bad1"
+  integrity sha512-zUtVnVxUosGgtiIHiUmoBncXw7ZtIlnLd2rOtrIfrxwCnAgY3c33LF9Jd/+yz9w1m5CnQ/MbLW71WjM0lql5XQ==
+  dependencies:
+    "@middy/util" "6.0.0"
+
 "@middy/util@6.0.0":
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/@middy/util/-/util-6.0.0.tgz#dddada0cfa40dcdfc0b41bd116a58ae14a3212a8"
@@ -146,6 +153,11 @@
   dependencies:
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
+
+"@types/aws-lambda@^8.10.147":
+  version "8.10.147"
+  resolved "https://registry.yarnpkg.com/@types/aws-lambda/-/aws-lambda-8.10.147.tgz#dc5c89aa32f47a9b35e52c32630545c83afa6f2f"
+  integrity sha512-nD0Z9fNIZcxYX5Mai2CTmFD7wX7UldCkW2ezCF8D1T5hdiLsnTWDGRpfRYntU6VjTdLQjOvyszru7I1c1oCQew==
 
 "@types/estree@^1.0.6":
   version "1.0.6"

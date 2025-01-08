@@ -1,14 +1,15 @@
 import { httpAdapt } from '@/infra/adapters/http';
+import { RequestFile } from '@/types/file';
 
 type Data = {
-  name: string;
+  file: RequestFile;
 };
 
 export const handler = httpAdapt<Data>(async (request) => {
   return {
-    statusCode: 200,
-    body: {
-      message: `Hello ${request.body.name}`,
+    status: 200,
+    data: {
+      name: request.body.file?.filename,
     },
   };
 });
