@@ -1,10 +1,11 @@
+import { ListUsersUseCase } from '@/domain/users/use-cases/list-users';
+import { httpAdapt } from '@/infra/adapters/http';
 import { routesAdapt } from '@/infra/adapters/routes';
-import { listUsersHandler } from './list-users';
 
 export const handler = routesAdapt([
   {
     path: '/users',
     method: 'GET',
-    handler: listUsersHandler,
+    handler: httpAdapt(new ListUsersUseCase()),
   },
 ]);

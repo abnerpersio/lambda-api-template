@@ -1,5 +1,5 @@
 import { errorHandler } from '@/infra/middlewares/error-handler';
-import { DefaultData, HttpRequest, HttpResponse } from '@/types/http';
+import { HttpResponse, UseCase } from '@/types/http';
 import middy from '@middy/core';
 import httpJsonBodyParser from '@middy/http-json-body-parser';
 import httpMultipartBodyParser from '@middy/http-multipart-body-parser';
@@ -9,10 +9,6 @@ import type { APIGatewayProxyEventV2WithJWTAuthorizer } from 'aws-lambda';
 type MiddyEvent = Omit<APIGatewayProxyEventV2WithJWTAuthorizer, 'body'> & {
   body?: Record<string, unknown>;
 };
-
-export type Handler<TData extends DefaultData, TParams = Record<string, string>> = (
-  request: HttpRequest<TData, TParams>,
-) => Promise<HttpResponse>;
 
 function prepareResponseBody(result: HttpResponse) {
   if (!result.data && !result.message) return undefined;
@@ -24,9 +20,7 @@ function prepareResponseBody(result: HttpResponse) {
   return { data: result.data };
 }
 
-export function httpAdapt<TData extends DefaultData, TParams = Record<string, string>>(
-  handler: Handler<TData, TParams>,
-) {
+export function httpAdapt(useCase: UseCase) {
   return middy()
     .use(httpJsonBodyParser({ disableContentTypeError: true }))
     .use(httpMultipartBodyParser({ disableContentTypeError: true }))
@@ -46,12 +40,12 @@ export function httpAdapt<TData extends DefaultData, TParams = Record<string, st
       const { body, queryStringParameters, pathParameters, requestContext } = event as MiddyEvent;
       const userId = (requestContext.authorizer?.jwt?.claims?.username as string | null) ?? null;
 
-      const result = await handler({
-        query: queryStringParameters as Record<string, string>,
-        params: pathParameters as TParams,
-        body: body as TData,
+      const result = await useCase.execute({
+        query: queryStringParameters,
+        params: pathParameters,
+        body: body,
         userId,
-      });
+      } as any);
 
       return {
         statusCode: result.status,

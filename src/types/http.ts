@@ -18,3 +18,7 @@ export type HttpResponse =
       message?: string;
       data: never;
     };
+
+export interface UseCase {
+  execute(input: HttpRequest<DefaultData>): Promise<HttpResponse>;
+}
