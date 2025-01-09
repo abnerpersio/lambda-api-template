@@ -4,17 +4,19 @@ service: live055
 provider:
   name: aws
   runtime: nodejs22.x
+  region: es-east-1
   architecture: arm64
 
 package:
   individually: true
 
-esbuild:
-  bundle: true
-  minify: true
-  sourcemap: false
-  exclude:
-    - '@aws-sdk/*'
+build:
+  esbuild:
+    bundle: true
+    minify: true
+    sourcemap: false
+    exclude:
+      - '@aws-sdk/*'
 
 functions:
   upload:
