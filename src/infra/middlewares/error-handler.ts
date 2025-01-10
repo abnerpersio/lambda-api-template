@@ -6,30 +6,18 @@ export function errorHandler(): MiddlewareObj {
     before: () => {
       // TODO: add sentry context
     },
-    onError: (request) => {
-      const { error } = request;
+    onError: async (event) => {
+      const { error } = event;
 
-      const headers = {
-        ...request.response?.headers,
-        'Content-Type': 'application/json',
-      };
+      event.response = event.response ?? {};
+      const headers = { ...event.response?.headers, 'Content-Type': 'application/json' };
+      const statusCode = error instanceof HttpError ? error.statusCode : 500;
+      const message = error instanceof HttpError ? error.message : 'Internal server error';
 
-      if (error instanceof HttpError) {
-        request.response = {
-          ...request.response,
-          statusCode: error.statusCode ?? 500,
-          body: { message: error.message },
-          headers,
-        };
-        return;
-      }
-
-      request.response = {
-        ...request.response,
-        statusCode: 500,
-        body: { message: 'Internal server error' },
-        headers,
-      };
+      event.response.statusCode = statusCode;
+      event.response.body = JSON.stringify({ message });
+      event.response.headers = headers;
+      return event.response;
     },
   };
 }
