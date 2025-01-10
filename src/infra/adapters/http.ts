@@ -43,7 +43,7 @@ export function httpAdapt(useCase: UseCase) {
       const result = await useCase.execute({
         query: queryStringParameters,
         params: pathParameters,
-        body: body,
+        body: body ?? {},
         userId,
       } as any);
 
