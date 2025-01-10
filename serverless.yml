@@ -4,7 +4,7 @@ service: live055
 provider:
   name: aws
   runtime: nodejs22.x
-  region: es-east-1
+  region: us-east-1
   architecture: arm64
   memorySize: 128
 
