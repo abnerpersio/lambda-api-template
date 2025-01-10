@@ -22,9 +22,9 @@ function prepareResponseBody(result: HttpResponse) {
 
 export function httpAdapt(useCase: UseCase) {
   return middy()
+    .use(errorHandler())
     .use(httpJsonBodyParser({ disableContentTypeError: true }))
     .use(httpMultipartBodyParser({ disableContentTypeError: true }))
-    .use(errorHandler())
     .use(
       httpResponseSerializer({
         defaultContentType: 'application/json',
