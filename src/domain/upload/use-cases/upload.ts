@@ -6,7 +6,7 @@ type Data = {
 };
 
 export class UploadUseCase implements UseCase {
-  async execute(request: HttpRequest<Data>) {
+  async execute(request: HttpRequest<Data>): Promise<HttpResponse> {
     return {
       status: 200,
       data: {
