@@ -9,7 +9,9 @@ export function errorHandler(): MiddlewareObj {
     onError: async (event) => {
       const { error } = event;
 
-      console.warn(`[Error handler] got error`, error);
+      if (!(error instanceof HttpError)) {
+        console.warn(`[Error handler] unhandled error`, error);
+      }
 
       event.response = event.response ?? {};
       const headers = { ...event.response?.headers, 'Content-Type': 'application/json' };
@@ -21,5 +23,6 @@ export function errorHandler(): MiddlewareObj {
       event.response.headers = headers;
       return event.response;
     },
+  };
   };
 }
