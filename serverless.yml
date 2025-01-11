@@ -8,6 +8,13 @@ provider:
   architecture: arm64
   memorySize: 128
 
+  httpApi:
+    cors:
+      allowedOrigins: '*'
+      allowedHeaders: '*'
+      allowedMethods: '*'
+      maxAge: 6000
+
 package:
   individually: true
 
@@ -26,6 +33,7 @@ functions:
       - httpApi:
           path: /
           method: POST
+
   users:
     handler: src/infra/functions/users/index.handler
     events:
