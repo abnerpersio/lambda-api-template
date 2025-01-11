@@ -1,6 +1,7 @@
 import { errorHandler } from '@/infra/middlewares/error-handler';
 import { HttpResponse, UseCase } from '@/types/http';
 import middy from '@middy/core';
+import httpCors from '@middy/http-cors';
 import httpJsonBodyParser from '@middy/http-json-body-parser';
 import httpMultipartBodyParser from '@middy/http-multipart-body-parser';
 import httpResponseSerializer from '@middy/http-response-serializer';
@@ -36,6 +37,7 @@ export function httpAdapt(useCase: UseCase) {
         ],
       }),
     )
+    .use(httpCors())
     .handler(async (event: APIGatewayProxyEventV2WithJWTAuthorizer) => {
       const { body, queryStringParameters, pathParameters, requestContext } = event as MiddyEvent;
       const userId = (requestContext.authorizer?.jwt?.claims?.username as string | null) ?? null;
