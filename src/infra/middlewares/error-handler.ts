@@ -24,5 +24,4 @@ export function errorHandler(): MiddlewareObj {
       return event.response;
     },
   };
-  };
 }
