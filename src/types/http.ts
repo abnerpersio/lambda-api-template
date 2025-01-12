@@ -1,3 +1,9 @@
+import type { APIGatewayProxyEventV2WithJWTAuthorizer } from 'aws-lambda';
+
+export type MiddyEvent = Omit<APIGatewayProxyEventV2WithJWTAuthorizer, 'body'> & {
+  body?: Record<string, unknown>;
+};
+
 export type DefaultData = Record<string, unknown> | undefined;
 
 export type HttpRequest<TData extends DefaultData = undefined, TParams = Record<string, string>> = {
@@ -16,7 +22,7 @@ export type HttpResponse =
   | {
       status: number;
       message?: string;
-      data: never;
+      data?: never;
     };
 
 export interface UseCase {

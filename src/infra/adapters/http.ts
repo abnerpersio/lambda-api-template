@@ -1,15 +1,10 @@
 import { errorHandler } from '@/infra/middlewares/error-handler';
-import { HttpResponse, UseCase } from '@/types/http';
+import { HttpResponse, MiddyEvent, UseCase } from '@/types/http';
 import middy from '@middy/core';
 import httpCors from '@middy/http-cors';
 import httpJsonBodyParser from '@middy/http-json-body-parser';
 import httpMultipartBodyParser from '@middy/http-multipart-body-parser';
 import httpResponseSerializer from '@middy/http-response-serializer';
-import type { APIGatewayProxyEventV2WithJWTAuthorizer } from 'aws-lambda';
-
-type MiddyEvent = Omit<APIGatewayProxyEventV2WithJWTAuthorizer, 'body'> & {
-  body?: Record<string, unknown>;
-};
 
 function prepareResponseBody(result: HttpResponse) {
   if (!result.data && !result.message) return undefined;
@@ -18,7 +13,7 @@ function prepareResponseBody(result: HttpResponse) {
     return { message: result.message };
   }
 
-  return { data: result.data };
+  return { ...result.data };
 }
 
 export function httpAdapt(useCase: UseCase) {
@@ -38,8 +33,8 @@ export function httpAdapt(useCase: UseCase) {
       }),
     )
     .use(httpCors())
-    .handler(async (event: APIGatewayProxyEventV2WithJWTAuthorizer) => {
-      const { body, queryStringParameters, pathParameters, requestContext } = event as MiddyEvent;
+    .handler(async (event: MiddyEvent) => {
+      const { body, queryStringParameters, pathParameters, requestContext } = event;
       const userId = (requestContext.authorizer?.jwt?.claims?.username as string | null) ?? null;
 
       const result = await useCase.execute({
