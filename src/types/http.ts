@@ -20,5 +20,5 @@ export type HttpResponse =
     };
 
 export interface UseCase {
-  execute(input: HttpRequest): Promise<HttpResponse>;
+  execute(request: HttpRequest): Promise<HttpResponse>;
 }
