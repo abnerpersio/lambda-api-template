@@ -16,7 +16,7 @@ export type HttpRequest<TData extends DefaultData = undefined, TParams = Record<
 export type HttpResponse =
   | {
       status: number;
-      data?: any;
+      data?: Record<string, any>;
       message?: never;
     }
   | {
